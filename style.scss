@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  .wrap {
+    margin-top: 20%;
+    .listUsers {
+      height: auto;
+      background-color: white;
+      border: 2px solid black;
+      .pUser {
+        width: 100%;
+      }
+      &:nth-child(even) {
+        background-color: grey;
+        width: 100%;
+        height: 50px;
+      }
+    }
+    button {
+      width: 100%;
+      padding: 30px 40px;
+    }
+
+    form {
+      button {
+        width: 100%;
+        padding: 10px 40px;
+        border: 2px solid gray;
+      }
+    }
+  }
+}
