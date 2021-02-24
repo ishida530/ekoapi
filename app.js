@@ -48,27 +48,50 @@ function displayUsers() {
     index++;
   }
 }
+const form = document.querySelector("form");
 
-postBtn.addEventListener("click", (e) => {
+// postBtn.addEventListener("click", (e) => {
+//   e.preventDefault();
+
+const inputName = document.querySelector("#inputName");
+const inputLastName = document.querySelector("#inputLastName");
+const inputcity = document.querySelector("#inputCity");
+const inputAge = document.querySelector("#inputAge");
+const inputStreet = document.querySelector("#inputStreet");
+const inputPostCode = document.querySelector("#inputPostCode");
+
+form.addEventListener("submit", (e) => {
   e.preventDefault();
-
-  const inputName = document.querySelector("#inputName");
-  const inputLastName = document.querySelector("#inputLastName");
-  const inputcity = document.querySelector("#inputCity");
-  const inputAge = document.querySelector("#inputAge");
-  const inputStreet = document.querySelector("#inputStreet");
-  const inputPostCode = document.querySelector("#inputPostCode");
-
-  //   send a POST request
-
-  axios
-    .post("http://fronttest.ekookna.pl/user", {
+  let data = new FormData(form);
+  // formData.append("first_name", `${inputName}`);
+  data.append(inputName, inputName.textContent);
+  console.log(data);
+  axios({
+    method: "post",
+    url: "http://fronttest.ekookna.pl/user/",
+    data: data,
+    append: {
       first_name: inputName,
+      last_name: inputLastName,
+      age: inputAge,
+      city: inputcity,
+      postal_code: inputPostCode,
+      street: inputStreet,
+    },
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
+    .then((res) => {
+      console.log(res);
+      //  first_name: inputName,
+      // last_name: inputLastName,
+      // age: inputAge,
+      // city: inputcity,
+      // postal_code: inputPostCode,
+      // street: inputStreet,
     })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
+    .catch((err) => {
+      throw err;
     });
 });
