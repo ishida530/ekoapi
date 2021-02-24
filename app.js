@@ -64,32 +64,37 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   let data = new FormData(form);
   // formData.append("first_name", `${inputName}`);
-  data.append(inputName, inputName.textContent);
+  {
+    data.append("inputName", inputName.textContent);
+    data.append("inputLastName", inputLastName.textContent);
+    data.append("inputcity", inputcity.textContent);
+    data.append("inputAge", inputAge.textContent);
+    data.append("inputStreet", inputStreet.textContent);
+    data.append("inputPostCode", inputPostCode.textContent);
+  }
   console.log(data);
   axios({
     method: "post",
-    url: "http://fronttest.ekookna.pl/user/",
+    url: "https://fronttest.ekookna.pl/user/",
     data: data,
-    append: {
-      first_name: inputName,
-      last_name: inputLastName,
-      age: inputAge,
-      city: inputcity,
-      postal_code: inputPostCode,
-      street: inputStreet,
-    },
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+    // user: data,
+    // first_name: inputName,
+    // last_name: inputLastName,
+    // age: inputAge,
+    // city: inputcity,
+    // postal_code: inputPostCode,
+    // street: inputStreet,
   })
-    .then((res) => {
-      console.log(res);
-      //  first_name: inputName,
-      // last_name: inputLastName,
-      // age: inputAge,
-      // city: inputcity,
-      // postal_code: inputPostCode,
-      // street: inputStreet,
+    .then((response) => {
+      console.log(response);
+      data.users = {
+        first_name: inputName,
+        last_name: inputLastName,
+        age: inputAge,
+        city: inputcity,
+        postal_code: inputPostCode,
+        street: inputStreet,
+      };
     })
     .catch((err) => {
       throw err;
