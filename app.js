@@ -10,7 +10,7 @@ const divUsers = document.querySelector(".listUsers");
 getBtn.addEventListener("click", () => {
   // Make a request for a user with a given ID
   axios
-    .get("http://fronttest.ekookna.pl/")
+    .get("https://fronttest.ekookna.pl/")
     .then(function (response) {
       // handle success
       console.log(response);
@@ -100,7 +100,7 @@ getIdBtn.addEventListener("click", () => {
   let id = prompt("Podaj ID użytkownika którego chcesz wyświetlić");
 
   axios
-    .get(`http://fronttest.ekookna.pl/user/${id} `)
+    .get(`https://fronttest.ekookna.pl/user/${id} `)
     .then(function (response) {
       // handle success
       console.log(response);
@@ -176,42 +176,18 @@ deleteBtn.addEventListener("click", () => {
     });
 });
 
-// searchBox.addEventListener("input", (e) => {
-//   pList = [...document.querySelectorAll(".pList")];
-//   let oldList = divUsers;
-//   const searchText = e.target.value.toLowerCase();
-
-//   let newPList = [...pList];
-//   var displaySeaching = [];
-//   for (let i = 0; i < pList.length; i++) {
-//     let stringP = pList[i].innerHtml;
-//     console.log(stringP);
-//     var word = stringP.split(" ");
-
-//     var lastName = word[3];
-//     console.log(lastName);
-
-//     console.log(lastName.toLowerCase().includes(searchText));
-//     if (lastName.toLowerCase().includes(searchText)) {
-//       displaySeaching.push(pList[i]).innerHtml;
-//       console.log(displaySeaching);
-//       console.log(" zdziala?");
-//     } else {
-//       console.log("nie dziala?");
-//     }
-//   }
-//   divUsers.innerHtml = "";
-//   displaySeaching.forEach((e) => {
-//     let pSearching = document.createElement("p");
-//     pSearching.innerHtml = e.innerHtml;
-//     console.log(divUsers);
-//     divUsers.appendChild(pSearching);
-//   });
-// });
 searchBox.addEventListener("input", (e) => {
   console.log(users);
+  const searchText = e.target.value.toLowerCase();
 
-  users.forEach((e) => {
-    console.log(e.lastName);
-  });
+  for (let i = 0; i < users.length; i++) {
+    if (`${users[i].last_name.toLowerCase()}`.includes(searchText)) {
+      users = users.filter(function (user) {
+        return user.last_name.toLowerCase().includes(searchText);
+      });
+    } else {
+      console.log(`ten zly:${users[i].last_name}`);
+    }
+    displayUsers();
+  }
 });
