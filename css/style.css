@@ -9,20 +9,22 @@ body .wrap {
   margin-top: 20%;
 }
 
-body .wrap .listUsers {
+body .wrap div .listUsers {
   height: auto;
   background-color: white;
   border: 2px solid black;
+  min-height: 200px;
+  height: au;
 }
 
-body .wrap .listUsers .pUser {
-  width: 100%;
-}
-
-body .wrap .listUsers:nth-child(even) {
+body .wrap div .listUsers p:nth-child(even) {
   background-color: grey;
   width: 100%;
   height: 50px;
+}
+
+body .wrap div .listUsers .pUser {
+  width: 100%;
 }
 
 body .wrap button {

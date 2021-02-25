@@ -16,18 +16,23 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
 
             <div class="wrap d-flex col-12 ">
-                <div class="listUsers col-6">
+                <div class="col-6 d-flex flex-column">
+                    <input class="inputSearch" type="" placeholder="Znajdz nazwisko">
+                    <div class="listUsers ">
+
+                    </div>
                 </div>
 
                 <div class="col-2 d-flex flex-column">
-                    <button id="get">Pobierz użytkownika</button>
-                    <button id="update">Aktualizacja</button>
+                    <button id="get">Pobierz wszystkich użytkowników</button>
+                    <button id="getID">Pobierz użytkownika o ID</button>
+                    <button id="delete">Usuń z bazy użytkownika po ID</button>
                 </div>
-                <form class="col-4" method="POST">
+                <form class="col-4" method="POST" name="form">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputName">Imię</label>
@@ -61,6 +66,8 @@
                         </div>
                     </div>
                     <button type="submit" id="post" class=" btn btn-light">Dodaj użytkownika do bazy</button>
+                    <button type="submit" id="put" class=" btn btn-light">Edytuj użytkownika w bazie</button>
+
                 </form>
             </div>
         </div>
