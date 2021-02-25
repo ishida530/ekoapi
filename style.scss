@@ -7,6 +7,16 @@ body {
   .wrap {
     margin-top: 20%;
     div {
+      .list {
+        button {
+          width: 100px;
+          height: 30px;
+        }
+        input {
+          height: 30px;
+          width: 40px;
+        }
+      }
       .listUsers {
         height: auto;
         background-color: white;
@@ -23,12 +33,12 @@ body {
         }
       }
     }
-
-    button {
-      width: 100%;
-      padding: 30px 40px;
+    .buttons {
+      button {
+        width: 100%;
+        padding: 20px 40px;
+      }
     }
-
     form {
       button {
         width: 100%;

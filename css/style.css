@@ -9,6 +9,16 @@ body .wrap {
   margin-top: 20%;
 }
 
+body .wrap div .list button {
+  width: 100px;
+  height: 30px;
+}
+
+body .wrap div .list input {
+  height: 30px;
+  width: 40px;
+}
+
 body .wrap div .listUsers {
   height: auto;
   background-color: white;
@@ -27,9 +37,9 @@ body .wrap div .listUsers .pUser {
   width: 100%;
 }
 
-body .wrap button {
+body .wrap .buttons button {
   width: 100%;
-  padding: 30px 40px;
+  padding: 20px 40px;
 }
 
 body .wrap form button {

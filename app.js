@@ -191,3 +191,27 @@ searchBox.addEventListener("input", (e) => {
     displayUsers();
   }
 });
+
+const min = document.querySelector("#min");
+const max = document.querySelector("#max");
+
+min.addEventListener("input", () => {
+  console.log(users);
+  console.log(min.value);
+
+  for (let i = 0; i < users.length; i++) {
+    console.log(users[i].age >= min.value);
+    users = users.map(checkMin);
+    console.log(users);
+    function checkMin(user) {
+      return users[i].age >= min.value;
+    }
+    // users = users.filter((user) => users[i].age >= min.value);
+
+    // var result = participants.filter(participant => participant.age > 18);
+    // document.getElementById("test").innerHTML = result.map(e => e.name + " -> " + e.age).join(', ');
+
+    // console.log(`ten zly:${users[i].age}`, i++);
+    displayUsers();
+  }
+});
