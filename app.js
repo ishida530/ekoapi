@@ -58,12 +58,12 @@ function displayUsers() {
     ].textContent = `ID:${idUser} - ${firstName} ${lastName}  ${age}lat ${city} ${street} ${postCode} `;
   }
 }
-const form = document.querySelector("form");
+const addUserBtn = document.querySelector("#post");
 
 const inputName = document.querySelector("#inputName");
 const inputLastName = document.querySelector("#inputLastName");
 const inputCity = document.querySelector("#inputCity");
-const inputAge = document.querySelector("#inputAge");
+var inputAge = document.querySelector("#inputAge");
 const inputStreet = document.querySelector("#inputStreet");
 const inputPostCode = document.querySelector("#inputPostCode");
 
@@ -75,29 +75,41 @@ var user = {
   postal_code: inputPostCode.value,
   street: inputStreet.value,
 };
-form.addEventListener("submit", (e) => {
+addUserBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  var bodyFormData = new FormData();
-  bodyFormData.append("first_name", inputName.value);
-  bodyFormData.append("last_name", inputLastName.value);
-  bodyFormData.append("age", inputAge.value);
-  bodyFormData.append("city", inputCity.value);
-  bodyFormData.append("postal_code", inputPostCode.value);
-  bodyFormData.append("street", inputStreet.value);
+  if (
+    inputName.value !== "" &&
+    inputLastName.value !== "" &&
+    inputCity.value !== "" &&
+    inputAge.value > "" &&
+    inputPostCode.value !== "" &&
+    inputStreet.value !== ""
+  ) {
+    // inputAge = parseInt(inputAge.value);
 
-  axios({
-    method: "post",
-    url: "https://fronttest.ekookna.pl/user",
-    data: bodyFormData,
-    headers: { "Content-Type": "multipart/form-data" },
-  })
-    .then(function (response) {
-      console.log(response);
+    var bodyFormData = new FormData();
+    bodyFormData.append("first_name", inputName.value);
+    bodyFormData.append("last_name", inputLastName.value);
+    bodyFormData.append("age", inputAge.value);
+    bodyFormData.append("city", inputCity.value);
+    bodyFormData.append("postal_code", inputPostCode.value);
+    bodyFormData.append("street", inputStreet.value);
+
+    axios({
+      method: "post",
+      url: "https://fronttest.ekookna.pl/user",
+      data: bodyFormData,
+      headers: { "Content-Type": "multipart/form-data" },
     })
-    .catch(function (err) {
-      throw err;
-    });
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (err) {
+        throw err;
+      });
+  } else return alert("Wypełnij pola prawidłowo");
+  alert("Użytkownik został dodany do bazy");
 });
 
 getIdBtn.addEventListener("click", () => {
@@ -123,64 +135,79 @@ getIdBtn.addEventListener("click", () => {
     });
 });
 
-updateBtn.addEventListener("click", () => {
+updateBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
   let updateIdUser = prompt("Podaj ID użytkownika którego chcesz edytować");
 
-  axios
-    .get(`https://fronttest.ekookna.pl/user/${updateIdUser} `)
-    .then(function (response) {
-      console.log(response);
+  if (
+    inputName.value !== "" &&
+    inputLastName.value !== "" &&
+    inputCity.value !== "" &&
+    inputAge.value !== "" &&
+    inputPostCode.value !== "" &&
+    inputStreet.value !== ""
+  ) {
+    axios
+      .get(`https://fronttest.ekookna.pl/user/${updateIdUser} `)
+      .then(function (response) {
+        console.log(response);
 
-      console.log(response.data.user.first_name);
+        var bodyFormData = new FormData();
+        bodyFormData.append("first_name", inputName.value);
+        bodyFormData.append("last_name", inputLastName.value);
+        bodyFormData.append("age", inputAge.value);
+        bodyFormData.append("city", inputCity.value);
+        bodyFormData.append("postal_code", inputPostCode.value);
+        bodyFormData.append("street", inputStreet.value);
+        bodyFormData.append("id", updateIdUser);
+        bodyFormData.append("_method", "put");
 
-      var bodyFormData = new FormData();
-      bodyFormData.append("first_name", inputName.value);
-      bodyFormData.append("last_name", inputLastName.value);
-      bodyFormData.append("age", inputAge.value);
-      bodyFormData.append("city", inputCity.value);
-      bodyFormData.append("postal_code", inputPostCode.value);
-      bodyFormData.append("street", inputStreet.value);
-      bodyFormData.append("id", updateIdUser);
-      bodyFormData.append("_method", "put");
-
-      axios({
-        method: "post",
-        url: `https://fronttest.ekookna.pl/user/${updateIdUser}`,
-        data: bodyFormData,
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-        .then(function (response) {
-          console.log(response);
+        axios({
+          method: "post",
+          url: `https://fronttest.ekookna.pl/user/${updateIdUser}`,
+          data: bodyFormData,
+          headers: { "Content-Type": "multipart/form-data" },
         })
-        .catch(function (err) {
-          throw err;
-        });
-    });
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (err) {
+            throw err;
+          });
+      });
+  } else return alert("Wypełnij wszystkie pola prawidłowo!");
+  alert("Użytkownik został zaktualizowany");
 });
 
 deleteBtn.addEventListener("click", () => {
   let deleteIdUser = prompt("Podaj ID użytkownika którego chcesz usunać");
+  if (deleteIdUser.length != "") {
+    var bodyFormData = new FormData();
 
-  var bodyFormData = new FormData();
+    bodyFormData.append("id", deleteIdUser);
+    bodyFormData.append("_method", "delete");
 
-  bodyFormData.append("id", deleteIdUser);
-  bodyFormData.append("_method", "delete");
-
-  axios({
-    method: "post",
-    url: `https://fronttest.ekookna.pl/user/${deleteIdUser}`,
-    data: bodyFormData,
-    headers: { "Content-Type": "multipart/form-data" },
-  })
-    .then(function (response) {
-      console.log(response);
+    axios({
+      method: "post",
+      url: `https://fronttest.ekookna.pl/user/${deleteIdUser}`,
+      data: bodyFormData,
+      headers: { "Content-Type": "multipart/form-data" },
     })
-    .catch(function (err) {
-      throw err;
-    });
+      .then(function (response) {
+        console.log(response);
+
+        alert("Użytkownik został usunięty z");
+        getUsers();
+        displayUsers();
+      })
+      .catch(function (err) {
+        throw err;
+      });
+  } else alert("Wprowadz poprawny numer ID");
 });
 
-searchBox.addEventListener("input", (e) => {
+searchBox.addEventListener("keydown", (e) => {
   console.log(users);
   const searchText = e.target.value.toLowerCase();
 
@@ -190,29 +217,26 @@ searchBox.addEventListener("input", (e) => {
         return user.last_name.toLowerCase().includes(searchText);
       });
     } else {
-      getUsers();
-      users = users.filter(function (user) {
-        return user.last_name.toLowerCase().includes(searchText);
-      });
+      users = users;
       console.log(`ten zly:${users[i].last_name}`);
     }
-
     displayUsers();
   }
 });
 
 setAgeBtn.addEventListener("click", () => {
-  console.log(users);
-  console.log(min.value);
-
-  for (let i = 0; i < users.length; i++) {
-    console.log(users[i].age >= min.value);
+  if (max.value != 0 && min.value != 0) {
     console.log(users);
-    function checkMin(user) {
-      return user.age >= min.value && user.age <= max.value;
+    console.log(min.value);
+    getUsers();
+    for (let i = 0; i < users.length; i++) {
+      console.log(users[i].age >= min.value);
+      console.log(users);
+      function checkMin(user) {
+        return user.age >= min.value && user.age <= max.value;
+      }
+      users = users.filter(checkMin);
+      displayUsers();
     }
-    users = users.filter(checkMin);
-
-    displayUsers();
-  }
+  } else alert("Ustaw poprawnie przedział min i max");
 });

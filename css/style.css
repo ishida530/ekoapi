@@ -5,8 +5,12 @@
           box-sizing: border-box;
 }
 
+body {
+  background-color: #ccc;
+}
+
 body .wrap {
-  margin-top: 20%;
+  margin-top: 5%;
 }
 
 body .wrap div .list button {
@@ -16,7 +20,8 @@ body .wrap div .list button {
 
 body .wrap div .list input {
   height: 30px;
-  width: 40px;
+  width: 80px;
+  text-align: center;
 }
 
 body .wrap div .listUsers {
@@ -28,13 +33,15 @@ body .wrap div .listUsers {
 }
 
 body .wrap div .listUsers p:nth-child(even) {
-  background-color: grey;
+  background-color: #ddd;
   width: 100%;
   height: 50px;
+  line-height: 50px;
 }
 
 body .wrap div .listUsers .pUser {
   width: 100%;
+  line-height: 50px;
 }
 
 body .wrap .buttons button {
