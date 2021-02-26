@@ -139,45 +139,46 @@ updateBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
   let updateIdUser = prompt("Podaj ID użytkownika którego chcesz edytować");
+  if (updateIdUser.length != "") {
+    if (
+      inputName.value !== "" &&
+      inputLastName.value !== "" &&
+      inputCity.value !== "" &&
+      inputAge.value !== "" &&
+      inputPostCode.value !== "" &&
+      inputStreet.value !== ""
+    ) {
+      axios
+        .get(`https://fronttest.ekookna.pl/user/${updateIdUser} `)
+        .then(function (response) {
+          console.log(response);
 
-  if (
-    inputName.value !== "" &&
-    inputLastName.value !== "" &&
-    inputCity.value !== "" &&
-    inputAge.value !== "" &&
-    inputPostCode.value !== "" &&
-    inputStreet.value !== ""
-  ) {
-    axios
-      .get(`https://fronttest.ekookna.pl/user/${updateIdUser} `)
-      .then(function (response) {
-        console.log(response);
+          var bodyFormData = new FormData();
+          bodyFormData.append("first_name", inputName.value);
+          bodyFormData.append("last_name", inputLastName.value);
+          bodyFormData.append("age", inputAge.value);
+          bodyFormData.append("city", inputCity.value);
+          bodyFormData.append("postal_code", inputPostCode.value);
+          bodyFormData.append("street", inputStreet.value);
+          bodyFormData.append("id", updateIdUser);
+          bodyFormData.append("_method", "put");
 
-        var bodyFormData = new FormData();
-        bodyFormData.append("first_name", inputName.value);
-        bodyFormData.append("last_name", inputLastName.value);
-        bodyFormData.append("age", inputAge.value);
-        bodyFormData.append("city", inputCity.value);
-        bodyFormData.append("postal_code", inputPostCode.value);
-        bodyFormData.append("street", inputStreet.value);
-        bodyFormData.append("id", updateIdUser);
-        bodyFormData.append("_method", "put");
-
-        axios({
-          method: "post",
-          url: `https://fronttest.ekookna.pl/user/${updateIdUser}`,
-          data: bodyFormData,
-          headers: { "Content-Type": "multipart/form-data" },
-        })
-          .then(function (response) {
-            console.log(response);
+          axios({
+            method: "post",
+            url: `https://fronttest.ekookna.pl/user/${updateIdUser}`,
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data" },
           })
-          .catch(function (err) {
-            throw err;
-          });
-      });
-  } else return alert("Wypełnij wszystkie pola prawidłowo!");
-  alert("Użytkownik został zaktualizowany");
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (err) {
+              throw err;
+            });
+        });
+    } else return alert("Wypełnij wszystkie pola prawidłowo!");
+    alert("Użytkownik został zaktualizowany");
+  } else alert("Wprowadz poprawny numer ID");
 });
 
 deleteBtn.addEventListener("click", () => {
