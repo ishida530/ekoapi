@@ -7,31 +7,33 @@ const searchBox = document.querySelector(".inputSearch");
 const min = document.querySelector("#min");
 const max = document.querySelector("#max");
 const setAgeBtn = document.querySelector("#setAge");
+const clearBtn = document.querySelector(".clear");
+const divUsers = document.querySelector(".listUsers");
 
 let users = [];
 var index = 0;
-const divUsers = document.querySelector(".listUsers");
+
 getUsers();
+
 function getUsers() {
   getBtn.addEventListener("click", () => {
-    // Make a request for a user with a given ID
     axios
       .get("https://fronttest.ekookna.pl/")
       .then(function (response) {
-        // handle success
         console.log(response);
         users = response.data.users;
         displayUsers();
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
       })
-      .then(function () {
-        // always executed
-      });
+      .then(function () {});
   });
 }
+
+clearBtn.addEventListener("click", () => {
+  divUsers.innerHTML = "";
+});
 function pCreator() {
   const pUser = document.createElement("p");
   pUser.setAttribute("id", `${index++}`);
@@ -120,10 +122,8 @@ getIdBtn.addEventListener("click", () => {
     .then(function (response) {
       // handle success
       console.log(response);
-      console.log(users);
 
       users.push(response.data.user);
-      console.log(users);
       displayUsers();
     })
     .catch(function (error) {
@@ -208,7 +208,6 @@ deleteBtn.addEventListener("click", () => {
 });
 
 searchBox.addEventListener("keydown", (e) => {
-  console.log(users);
   const searchText = e.target.value.toLowerCase();
 
   for (let i = 0; i < users.length; i++) {
@@ -218,7 +217,6 @@ searchBox.addEventListener("keydown", (e) => {
       });
     } else {
       users = users;
-      console.log(`ten zly:${users[i].last_name}`);
     }
     displayUsers();
   }
@@ -226,12 +224,8 @@ searchBox.addEventListener("keydown", (e) => {
 
 setAgeBtn.addEventListener("click", () => {
   if (max.value != 0 && min.value != 0) {
-    console.log(users);
-    console.log(min.value);
     getUsers();
     for (let i = 0; i < users.length; i++) {
-      console.log(users[i].age >= min.value);
-      console.log(users);
       function checkMin(user) {
         return user.age >= min.value && user.age <= max.value;
       }
