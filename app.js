@@ -4,6 +4,10 @@ const getIdBtn = document.querySelector("#getID");
 const updateBtn = document.querySelector("#put");
 const deleteBtn = document.querySelector("#delete");
 const searchBox = document.querySelector(".inputSearch");
+const min = document.querySelector("#min");
+const max = document.querySelector("#max");
+const setAgeBtn = document.querySelector("#setAge");
+
 let users = [];
 var index = 0;
 const divUsers = document.querySelector(".listUsers");
@@ -52,9 +56,6 @@ function displayUsers() {
   }
 }
 const form = document.querySelector("form");
-
-// postBtn.addEventListener("click", (e) => {
-//   e.preventDefault();
 
 const inputName = document.querySelector("#inputName");
 const inputLastName = document.querySelector("#inputLastName");
@@ -192,26 +193,18 @@ searchBox.addEventListener("input", (e) => {
   }
 });
 
-const min = document.querySelector("#min");
-const max = document.querySelector("#max");
-
-min.addEventListener("input", () => {
+setAgeBtn.addEventListener("click", () => {
   console.log(users);
   console.log(min.value);
 
   for (let i = 0; i < users.length; i++) {
     console.log(users[i].age >= min.value);
-    users = users.map(checkMin);
     console.log(users);
     function checkMin(user) {
-      return users[i].age >= min.value;
+      return user.age >= min.value && user.age >= max.value;
     }
-    // users = users.filter((user) => users[i].age >= min.value);
+    users = users.filter(checkMin);
 
-    // var result = participants.filter(participant => participant.age > 18);
-    // document.getElementById("test").innerHTML = result.map(e => e.name + " -> " + e.age).join(', ');
-
-    // console.log(`ten zly:${users[i].age}`, i++);
     displayUsers();
   }
 });
