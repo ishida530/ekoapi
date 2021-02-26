@@ -11,24 +11,27 @@ const setAgeBtn = document.querySelector("#setAge");
 let users = [];
 var index = 0;
 const divUsers = document.querySelector(".listUsers");
-getBtn.addEventListener("click", () => {
-  // Make a request for a user with a given ID
-  axios
-    .get("https://fronttest.ekookna.pl/")
-    .then(function (response) {
-      // handle success
-      console.log(response);
-      users = response.data.users;
-      displayUsers();
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .then(function () {
-      // always executed
-    });
-});
+getUsers();
+function getUsers() {
+  getBtn.addEventListener("click", () => {
+    // Make a request for a user with a given ID
+    axios
+      .get("https://fronttest.ekookna.pl/")
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        users = response.data.users;
+        displayUsers();
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+  });
+}
 function pCreator() {
   const pUser = document.createElement("p");
   pUser.setAttribute("id", `${index++}`);
@@ -187,8 +190,13 @@ searchBox.addEventListener("input", (e) => {
         return user.last_name.toLowerCase().includes(searchText);
       });
     } else {
+      getUsers();
+      users = users.filter(function (user) {
+        return user.last_name.toLowerCase().includes(searchText);
+      });
       console.log(`ten zly:${users[i].last_name}`);
     }
+
     displayUsers();
   }
 });
@@ -201,7 +209,7 @@ setAgeBtn.addEventListener("click", () => {
     console.log(users[i].age >= min.value);
     console.log(users);
     function checkMin(user) {
-      return user.age >= min.value && user.age >= max.value;
+      return user.age >= min.value && user.age <= max.value;
     }
     users = users.filter(checkMin);
 
