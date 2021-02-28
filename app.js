@@ -33,6 +33,7 @@ function getUsers() {
 
 clearBtn.addEventListener("click", () => {
   divUsers.innerHTML = "";
+  users = [];
 });
 function pCreator() {
   const pUser = document.createElement("p");
